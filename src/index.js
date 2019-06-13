@@ -1,3 +1,4 @@
+const micro = require('micro')
 const { send, json } = require('micro') // brought in send and json functionality from micro
 const { router, get, post, put, del } = require('microrouter') // brought in functionality (router, get, post, put, del) from microrouter
 const Path = require('path') // this changed the backslash for the pathway
@@ -13,7 +14,7 @@ const db = new Datastore({
 }); // this creates the new database. This is from the documentation for npm nedb-promise
 
 
-module.exports = router(
+const server = micro(cors(router(
   get('/hello/:who', hello),
   get('/', async (req, res) => {
     return await db.find({})
@@ -39,4 +40,7 @@ module.exports = router(
     return await db.findOne({ _id: req.params.id })
   }),
   get('/*', notfound)
-)
+)))
+
+const PORT = process.env.PORT || 3000
+server.listen(PORT)
