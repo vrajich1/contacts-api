@@ -17,13 +17,13 @@ const db = new Datastore({
 
 const server = micro(cors(router(
   get('/hello/:who', hello),
-  get('/', async (req, res) => {
-    return await db.find({})
-  }),
-  post('/', async (req, res) => {
+    post('/', async (req, res) => {
     const js = await json(req) // this is what parces out the body (information) of the request
     const insert = await db.insert(js) //this is what inserts the request (info) into the db (database)
     return insert
+  }),
+  get('/', async (req, res) => {
+    return await db.find({})
   }),
   put('/:id', async (req, res) => {
     console.log(req.params.id)
@@ -33,13 +33,15 @@ const server = micro(cors(router(
     return await db.findOne({ _id: req.params.id })
   }),
   del('/:id', async (req, res) => {
-    const js = await json(req)
-    console.log(js)
-    return await db.findOne({ _id: req.params.id })
+    await db.remove({_id: req.params})
   }),
   get('/:id', async (req, res) => {
-    return await db.findOne({ _id: req.params.id })
+    await db.remove({ _id: req.params.id })
+    return {ok: true}
   }),
+  get('/:id', async (req, res) => {
+    return await db.findOne({_id: req.params.id})
+  }
   get('/*', notfound)
 )))
 
