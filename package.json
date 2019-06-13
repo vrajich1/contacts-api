@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "micro-dev",
-    "start": "micro",
+    "start": "node ./src",
     "lint": "xo",
     "test": "npm run lint && ava"
   },
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "micro": "latest",
+    "micro-cors": "^0.1.1",
     "microrouter": "^3.1.3",
     "nedb-promise": "^2.0.1"
   },

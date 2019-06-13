@@ -1,4 +1,5 @@
 const micro = require('micro')
+const cors = require('micro-cors')
 const { send, json } = require('micro') // brought in send and json functionality from micro
 const { router, get, post, put, del } = require('microrouter') // brought in functionality (router, get, post, put, del) from microrouter
 const Path = require('path') // this changed the backslash for the pathway
